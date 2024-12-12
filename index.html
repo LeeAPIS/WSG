@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Worksheet Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        .worksheet {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .column {
+            width: 200px;
+            border: 1px solid black;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            text-align: left; /* Align problems to the left */
+        }
+        .problem {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <h1>Math Worksheet Generator</h1>
+    <form id="worksheetForm">
+        <label for="minValue">Minimum Value:</label>
+        <input type="number" id="minValue" name="minValue" value="1" required>
+        <label for="maxValue">Maximum Value:</label>
+        <input type="number" id="maxValue" name="maxValue" value="10" required>
+        <label for="operation">Operation:</label>
+        <select id="operation" name="operation">
+            <option value="+">Addition</option>
+            <option value="-">Subtraction (Positive + Negative)</option>
+            <option value="sub_positive">Subtraction (Positive Answers)</option>
+            <option value="*">Multiplication</option>
+            <option value="/">Division</option>
+            <option value="add_sub">Addition + Subtraction</option>
+            <option value="mul_div">Multiplication + Division</option>
+            <option value="all">All</option>
+        </select>
+        
+        <button type="submit">Generate Worksheet</button>
+    </form>
+    <div id="worksheet" class="worksheet"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
