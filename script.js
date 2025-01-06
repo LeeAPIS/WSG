@@ -23,7 +23,7 @@ function generateUniqueProblems(min, max, operation, count) {
         // Randomly select an operation if multiple are allowed
         op = operations[Math.floor(Math.random() * operations.length)];
 
-        if (op === "÷") {
+        if (op === "/") {
             // Ensure whole-number answers for division
             const divisor = getRandomInt(min, max);
             const quotient = getRandomInt(min, max);
@@ -69,7 +69,7 @@ function getRandomInt(min, max) {
 }
 
 function displayWorksheet(problems) {
-    const worksheetDiv = document.getElementById("worksheet");
+    const worksheetDiv = document.getElementById("worksheet");	
     worksheetDiv.innerHTML = ""; // Clear previous content
 
     // Create 4 columns
