@@ -6,6 +6,9 @@ document.getElementById("worksheetForm").addEventListener("submit", function (ev
     const maxValue = parseInt(document.getElementById("maxValue").value);
     const operation = document.getElementById("operation").value;
 
+    // Log the values to ensure they are correct
+    console.log("minValue:", minValue, "maxValue:", maxValue, "operation:", operation);
+
     // Generate unique math problems
     const problems = generateUniqueProblems(minValue, maxValue, operation, 120);
 
@@ -17,7 +20,8 @@ function generateUniqueProblems(min, max, operation, count) {
     const problems = new Set();
     const operations = getOperations(operation);
 
-    while (problems.size < count) {
+    let attempts = 0; // Counter to avoid infinite loops
+    while (problems.size < count && attempts < 5000) {  // Prevent infinite loop
         let num1, num2, op, problem;
 
         // Randomly select an operation if multiple are allowed
@@ -43,6 +47,16 @@ function generateUniqueProblems(min, max, operation, count) {
 
         // Ensure uniqueness
         problems.add(problem);
+
+        attempts++;  // Increment attempt counter
+        if (attempts > 5000) {
+            console.log("Too many attempts, exiting loop");
+            break;
+        }
+    }
+
+    if (attempts > 5000) {
+        console.log("Unable to generate enough unique problems.");
     }
 
     // Convert Set to Array
