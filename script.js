@@ -27,7 +27,7 @@ function generateUniqueProblems(min, max, operation, count) {
         op = operations[Math.floor(Math.random() * operations.length)];
 
         // Handle different operations
-        if (op === "/") {
+        if (op === "÷") {
             num2 = getRandomInt(min, max);
             if (num2 === 0) num2 = 1; // Prevent division by zero
             num1 = num2 * getRandomInt(min, max); // Make sure num1 is divisible by num2
@@ -35,6 +35,10 @@ function generateUniqueProblems(min, max, operation, count) {
         } else if (op === "-") {
             num1 = getRandomInt(min, max);
             num2 = getRandomInt(min, num1); // Ensure no negative results for subtraction
+            problem = `${num1} ${op} ${num2} =`;
+        } else if (op === "×") {
+            num1 = getRandomInt(min, max);
+            num2 = getRandomInt(min, max);
             problem = `${num1} ${op} ${num2} =`;
         } else {
             num1 = getRandomInt(min, max);
@@ -55,9 +59,9 @@ function getOperations(operation) {
         case "add_sub":
             return ["+", "-"];
         case "mul_div":
-            return ["*", "/"];
+            return ["×", "÷"]; // Changed * and / to × and ÷
         case "all":
-            return ["+", "-", "*", "/"];
+            return ["+", "-", "×", "÷"]; // Changed * and / to × and ÷
         default:
             return [operation];
     }
