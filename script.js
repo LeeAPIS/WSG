@@ -3,9 +3,6 @@ function generateUniqueProblems(min, max, operation, count) {
     const problems = new Set(); // Store unique problems
     const operations = getOperations(operation); // Allowed operations
 
-    // Ensure valid inputs
-    if (min > max) throw new Error("Invalid range: min should be <= max");
-
     while (problems.size < count) {
         let num1, num2, op, problem;
 
@@ -36,13 +33,6 @@ function generateUniqueProblems(min, max, operation, count) {
 
         // Add problem to the set if unique
         problems.add(problem);
-
-        // Prevent infinite loop for too many problems
-        if (problems.size === count) break;
-        if (problems.size >= (max - min + 1) ** 2) {
-            console.warn("Not enough unique problems possible for this range.");
-            break;
-        }
     }
 
     return Array.from(problems);
@@ -96,6 +86,8 @@ function displayWorksheet(problems) {
 
 // Add event listener to the Generate button
 document.getElementById("generate").addEventListener("click", () => {
+    console.log("Generate button clicked"); // Debugging log
+
     const min = parseInt(document.getElementById("min").value, 10);
     const max = parseInt(document.getElementById("max").value, 10);
     const operation = document.getElementById("operation").value;
@@ -106,5 +98,6 @@ document.getElementById("generate").addEventListener("click", () => {
         displayWorksheet(problems);
     } catch (error) {
         alert(error.message);
+        console.error(error);
     }
 });
