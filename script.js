@@ -6,9 +6,6 @@ document.getElementById("worksheetForm").addEventListener("submit", function (ev
     const maxValue = parseInt(document.getElementById("maxValue").value);
     const operation = document.getElementById("operation").value;
 
-    // Log the values to ensure they are correct
-    console.log("minValue:", minValue, "maxValue:", maxValue, "operation:", operation);
-
     // Generate unique math problems
     const problems = generateUniqueProblems(minValue, maxValue, operation, 120);
 
@@ -20,8 +17,7 @@ function generateUniqueProblems(min, max, operation, count) {
     const problems = new Set();
     const operations = getOperations(operation);
 
-    let attempts = 0; // Counter to avoid infinite loops
-    while (problems.size < count && attempts < 5000) {  // Prevent infinite loop
+    while (problems.size < count) {
         let num1, num2, op, problem;
 
         // Randomly select an operation if multiple are allowed
@@ -33,13 +29,8 @@ function generateUniqueProblems(min, max, operation, count) {
             if (num2 === 0) num2 = 1; // Prevent division by zero
             num1 = num2 * getRandomInt(min, max); // Ensure num1 is a multiple of num2
             problem = `${num1} ${op} ${num2} =`;
-        } else if (op === "-" && operation === "sub_positive") {
-            // Subtraction with positive answers only
-            num1 = getRandomInt(min, max);
-            num2 = getRandomInt(min, num1); // num2 <= num1
-            problem = `${num1} ${op} ${num2} =`;
         } else {
-            // Generate problems for other operations (including subtraction with negative answers)
+            // Generate problems for other operations
             num1 = getRandomInt(min, max);
             num2 = getRandomInt(min, max);
             problem = `${num1} ${op} ${num2} =`;
@@ -47,20 +38,9 @@ function generateUniqueProblems(min, max, operation, count) {
 
         // Ensure uniqueness
         problems.add(problem);
-
-        attempts++;  // Increment attempt counter
-        if (attempts > 5000) {
-            console.log("Too many attempts, exiting loop");
-            break;
-        }
     }
 
-    if (attempts > 5000) {
-        console.log("Unable to generate enough unique problems.");
-    }
-
-    // Convert Set to Array
-    return Array.from(problems);
+    return Array.from(problems); // Convert Set to Array
 }
 
 function getOperations(operation) {
@@ -71,10 +51,8 @@ function getOperations(operation) {
             return ["*", "/"];
         case "all":
             return ["+", "-", "*", "/"];
-        case "sub_positive": // Specific handling for positive subtraction
-            return ["-"];
         default:
-            return [operation]; // Single operation or specific type
+            return [operation]; // Single operation
     }
 }
 
