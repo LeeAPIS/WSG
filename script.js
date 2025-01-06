@@ -52,13 +52,13 @@ function generateUniqueProblems(min, max, operation, count) {
 function getOperations(operation) {
     switch (operation) {
         case "add_sub":
-            return ["+", "-"];
+            return [" + ", " - "];
         case "mul_div":
-            return ["*", "/"];
+            return [" x ", " ÷ "];
         case "all":
-            return ["+", "-", "*", "/"];
+            return ["+ ", " - ", " x ", "÷"];
         case "sub_positive": // Specific handling for positive subtraction
-            return ["-"];
+            return [" - "];
         default:
             return [operation]; // Single operation or specific type
     }
