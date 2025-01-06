@@ -101,26 +101,26 @@ function openWorksheetPage(problems, operationName) {
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>${operationName} Practice</title>
             <style>
+                @media print {
+                    @page {
+                        size: A4;
+                        margin: 20mm;
+                    }
+                }
                 body {
                     font-family: 'Arial', sans-serif;
-                    margin: 20px;
-                    background-color: #f9f9f9;
+                    margin: 0;
+                    padding: 0;
+                    background-color: #fff;
                 }
                 h1 {
                     text-align: center;
-                    font-size: 2.5em;
+                    font-size: 2em;
                     color: #333;
                     margin-bottom: 20px;
                 }
                 .worksheet {
-                    display: flex;
-                    justify-content: space-between;
-                    flex-wrap: wrap;
-                    padding: 10px;
-                }
-                .column {
-                    width: calc(25% - 10px);
-                    border: 1px solid #ccc;
-                    border-radius: 5px;
-                    padding: 15px;
-                    box-sizing: border-box;
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    gap: 20px;
+                    padding:
