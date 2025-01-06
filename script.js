@@ -21,19 +21,20 @@ document.getElementById("worksheetForm").addEventListener("submit", function (ev
 });
 
 function generateUniqueProblems(min, max, operation, count) {
-    const problems = [];
+    const problems = new Set(); // Using Set to ensure uniqueness
     const operations = getOperations(operation);
 
-    // Generate problems until we reach the desired count
-    while (problems.length < count) {
+    while (problems.size < count) {
         let num1, num2, op, problem;
 
+        // Randomly select an operation
         op = operations[Math.floor(Math.random() * operations.length)];
 
         if (op === "/") {
+            // For division, ensure we avoid division by zero and create valid problems
             num2 = getRandomInt(min, max);
             if (num2 === 0) num2 = 1; // Prevent division by zero
-            num1 = num2 * getRandomInt(min, max); // Ensure num1 is divisible by num2
+            num1 = num2 * getRandomInt(min, max); // Make sure num1 is divisible by num2
             problem = `${num1} ${op} ${num2} =`;
         } else {
             num1 = getRandomInt(min, max);
@@ -41,13 +42,12 @@ function generateUniqueProblems(min, max, operation, count) {
             problem = `${num1} ${op} ${num2} =`;
         }
 
-        // Ensure uniqueness by checking against existing problems
-        if (!problems.includes(problem)) {
-            problems.push(problem);
-        }
+        // Add the generated problem to the set (only unique problems)
+        problems.add(problem);
     }
 
-    return problems;
+    // Convert Set to Array and return
+    return Array.from(problems);
 }
 
 function getOperations(operation) {
