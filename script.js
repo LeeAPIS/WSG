@@ -25,7 +25,8 @@ function generateUniqueProblems(min, max, operation, count) {
 
         if (op === "/") {
             // Ensure num1 is divisible by num2 for a whole-number result
-            num2 = getRandomInt(min, max); // Get a random divisor
+            num2 = getRandomInt(min, max);
+            if (num2 === 0) num2 = 1; // Prevent division by zero
             num1 = num2 * getRandomInt(min, max); // Ensure num1 is a multiple of num2
             problem = `${num1} ${op} ${num2} =`;
         } else if (op === "-" && operation === "sub_positive") {
