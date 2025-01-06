@@ -102,57 +102,25 @@ function openWorksheetPage(problems, operationName) {
             <title>${operationName} Practice</title>
             <style>
                 body {
-                    font-family: Arial, sans-serif;
+                    font-family: 'Arial', sans-serif;
                     margin: 20px;
+                    background-color: #f9f9f9;
                 }
                 h1 {
                     text-align: center;
+                    font-size: 2.5em;
+                    color: #333;
+                    margin-bottom: 20px;
                 }
                 .worksheet {
                     display: flex;
                     justify-content: space-between;
                     flex-wrap: wrap;
                     padding: 10px;
-                    margin-top: 20px;
                 }
                 .column {
                     width: calc(25% - 10px);
-                    border: 1px solid #000;
-                    padding: 10px;
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    padding: 15px;
                     box-sizing: border-box;
-                    margin: 5px;
-                }
-                .problem {
-                    margin: 5px 0;
-                }
-            </style>
-        </head>
-        <body>
-            <h1>${operationName} Practice</h1>
-            <div class="worksheet">
-                ${formatProblems(problems)}
-            </div>
-        </body>
-        </html>
-    `);
-    newWindow.document.close();
-}
-
-// Format problems into columns for the worksheet
-function formatProblems(problems) {
-    const columns = 4;
-    const problemsPerColumn = Math.ceil(problems.length / columns);
-
-    let html = "";
-    for (let i = 0; i < columns; i++) {
-        const columnProblems = problems.slice(i * problemsPerColumn, (i + 1) * problemsPerColumn);
-        html += `<div class="column">`;
-        columnProblems.forEach(problem => {
-            html += `<div class="problem">${problem}</div>`;
-        });
-        html += `</div>`;
-    }
-
-    return html;
-}
- 
