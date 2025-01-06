@@ -136,21 +136,4 @@ function openWorksheetPage(problems, operationName) {
             </style>
         </head>
         <body>
-            <h1>${operationName} Practice</h1>
-            <div class="worksheet">
-                ${formatProblems(problems)}
-            </div>
-        </body>
-        </html>
-    `);
-    newWindow.document.close();
-}
-
-// Format problems into a grid for the worksheet
-function formatProblems(problems) {
-    let html = "";
-    problems.forEach(problem => {
-        html += `<div class="problem">${problem}</div>`;
-    });
-    return html;
-}
+            <h1>${operationName} Practice</h
