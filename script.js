@@ -59,9 +59,9 @@ function getOperations(operation) {
         case "add_sub":
             return ["+", "-"];
         case "mul_div":
-            return ["×", "÷"]; // Changed * and / to × and ÷
+            return ["×", "÷"]; // Use the actual symbols here
         case "all":
-            return ["+", "-", "×", "÷"]; // Changed * and / to × and ÷
+            return ["+", "-", "×", "÷"]; // Include symbols in all operations
         default:
             return [operation];
     }
