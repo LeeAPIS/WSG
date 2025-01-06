@@ -24,11 +24,10 @@ function generateUniqueProblems(min, max, operation, count) {
         op = operations[Math.floor(Math.random() * operations.length)];
 
         if (op === "/") {
-            // Ensure whole-number answers for division
-            const divisor = getRandomInt(min, max);
-            const quotient = getRandomInt(min, max);
-            num1 = divisor * quotient;
-            problem = `${num1} ${op} ${divisor} =`;
+            // Ensure num1 is divisible by num2 for a whole-number result
+            num2 = getRandomInt(min, max); // Get a random divisor
+            num1 = num2 * getRandomInt(min, max); // Ensure num1 is a multiple of num2
+            problem = `${num1} ${op} ${num2} =`;
         } else if (op === "-" && operation === "sub_positive") {
             // Subtraction with positive answers only
             num1 = getRandomInt(min, max);
