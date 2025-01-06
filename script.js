@@ -6,8 +6,8 @@ document.getElementById("worksheetForm").addEventListener("submit", function (ev
     const maxValue = parseInt(document.getElementById("maxValue").value);
     const operation = document.getElementById("operation").value;
 
-    // Limit the number of problems generated (for now 20)
-    const problemsCount = 20; // Test with a smaller number of problems
+    // Limit the number of problems to a smaller size to avoid freezing
+    const problemsCount = 20; // Test with a smaller number of problems (20)
 
     // Generate unique math problems
     const problems = generateUniqueProblems(minValue, maxValue, operation, problemsCount);
@@ -17,33 +17,33 @@ document.getElementById("worksheetForm").addEventListener("submit", function (ev
 });
 
 function generateUniqueProblems(min, max, operation, count) {
-    const problems = new Set();
+    const problems = [];
     const operations = getOperations(operation);
 
-    while (problems.size < count) {
+    // Limit the number of iterations to `count`
+    while (problems.length < count) {
         let num1, num2, op, problem;
 
-        // Randomly select an operation if multiple are allowed
         op = operations[Math.floor(Math.random() * operations.length)];
 
         if (op === "/") {
-            // Ensure num1 is divisible by num2 for a whole-number result
             num2 = getRandomInt(min, max);
             if (num2 === 0) num2 = 1; // Prevent division by zero
-            num1 = num2 * getRandomInt(min, max); // Ensure num1 is a multiple of num2
+            num1 = num2 * getRandomInt(min, max); // Ensure num1 is divisible by num2
             problem = `${num1} ${op} ${num2} =`;
         } else {
-            // Generate problems for other operations
             num1 = getRandomInt(min, max);
             num2 = getRandomInt(min, max);
             problem = `${num1} ${op} ${num2} =`;
         }
 
-        // Ensure uniqueness
-        problems.add(problem);
+        // Ensure uniqueness by checking against existing problems
+        if (!problems.includes(problem)) {
+            problems.push(problem);
+        }
     }
 
-    return Array.from(problems); // Convert Set to Array
+    return problems;
 }
 
 function getOperations(operation) {
@@ -55,7 +55,7 @@ function getOperations(operation) {
         case "all":
             return ["+", "-", "*", "/"];
         default:
-            return [operation]; // Single operation
+            return [operation];
     }
 }
 
@@ -65,24 +65,4 @@ function getRandomInt(min, max) {
 
 function displayWorksheet(problems) {
     const worksheetDiv = document.getElementById("worksheet");
-    worksheetDiv.innerHTML = ""; // Clear previous content
-
-    // Create 4 columns
-    const columns = 4;
-    const problemsPerColumn = Math.ceil(problems.length / columns);
-
-    for (let i = 0; i < columns; i++) {
-        const columnDiv = document.createElement("div");
-        columnDiv.className = "column";
-
-        const columnProblems = problems.slice(i * problemsPerColumn, (i + 1) * problemsPerColumn);
-        columnProblems.forEach(problem => {
-            const problemDiv = document.createElement("div");
-            problemDiv.className = "problem";
-            problemDiv.textContent = problem;
-            columnDiv.appendChild(problemDiv);
-        });
-
-        worksheetDiv.appendChild(columnDiv);
-    }
-}
+    worksheetDiv.innerHTML = ""; // Clear previous cont
