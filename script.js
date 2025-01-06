@@ -107,4 +107,12 @@ function generatePDF(problems, operationName) {
     problems.forEach((problem, index) => {
         if (y > 280) { // Check if we need to add a new page
             doc.addPage();
-           
+            y = 20; // Reset y position for new page
+        }
+        doc.text(problem, 10, y);
+        y += lineHeight; // Move down for the next problem
+    });
+
+    // Save the PDF
+    doc.save(`${operationName}_Worksheet.pdf`);
+}
