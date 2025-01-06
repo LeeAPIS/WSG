@@ -5,9 +5,13 @@ document.getElementById("worksheetForm").addEventListener("submit", function (ev
     const minValue = parseInt(document.getElementById("minValue").value);
     const maxValue = parseInt(document.getElementById("maxValue").value);
     const operation = document.getElementById("operation").value;
+    const problemsCount = parseInt(document.getElementById("problemCount").value); // Read from input field
 
-    // Limit the number of problems to a smaller size to avoid freezing
-    const problemsCount = 40; // Test with a smaller number of problems (20)
+    // Validate problem count
+    if (problemsCount < 1) {
+        alert("Please select a positive number of problems.");
+        return;
+    }
 
     // Generate unique math problems
     const problems = generateUniqueProblems(minValue, maxValue, operation, problemsCount);
@@ -20,7 +24,7 @@ function generateUniqueProblems(min, max, operation, count) {
     const problems = [];
     const operations = getOperations(operation);
 
-    // Limit the number of iterations to `count`
+    // Generate problems until we reach the desired count
     while (problems.length < count) {
         let num1, num2, op, problem;
 
@@ -65,4 +69,25 @@ function getRandomInt(min, max) {
 
 function displayWorksheet(problems) {
     const worksheetDiv = document.getElementById("worksheet");
-    worksheetDiv.innerHTML = ""; // Clear previous cont
+    worksheetDiv.innerHTML = ""; // Clear previous content
+
+    // Create 4 columns
+    const columns = 4;
+    const problemsPerColumn = Math.ceil(problems.length / columns);
+
+    let htmlContent = '';
+
+    for (let i = 0; i < columns; i++) {
+        let columnHtml = `<div class="column">`;
+
+        const columnProblems = problems.slice(i * problemsPerColumn, (i + 1) * problemsPerColumn);
+        columnProblems.forEach(problem => {
+            columnHtml += `<div class="problem">${problem}</div>`;
+        });
+
+        columnHtml += `</div>`;
+        htmlContent += columnHtml;
+    }
+
+    worksheetDiv.innerHTML = htmlContent; // Single DOM update
+}
