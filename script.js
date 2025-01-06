@@ -52,13 +52,13 @@ function generateUniqueProblems(min, max, operation, count) {
 function getOperations(operation) {
     switch (operation) {
         case "add_sub":
-            return [" + ", " - "];
+            return ["+", "-"];
         case "mul_div":
-            return [" x ", " ÷ "];
+            return ["*", "/"];
         case "all":
-            return ["+ ", " - ", " x ", "÷"];
+            return ["+", "-", "*", "/"];
         case "sub_positive": // Specific handling for positive subtraction
-            return [" - "];
+            return ["-"];
         default:
             return [operation]; // Single operation or specific type
     }
@@ -69,7 +69,7 @@ function getRandomInt(min, max) {
 }
 
 function displayWorksheet(problems) {
-    const worksheetDiv = document.getElementById("worksheet");	
+    const worksheetDiv = document.getElementById("worksheet");
     worksheetDiv.innerHTML = ""; // Clear previous content
 
     // Create 4 columns
