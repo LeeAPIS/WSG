@@ -1,52 +1,49 @@
 function generateUniqueProblems(min, max, operation, count) {
-    const problems = new Set();
-    const operations = getOperations(operation);
+    const problems = new Set(); // Store unique problems
+    const operations = getOperations(operation); // Allowed operations
 
-    // Precompute valid subtraction problems for sub_positive
-    let subPositivePairs = [];
-    if (operation === "sub_positive") {
-        for (let i = min; i <= max; i++) {
-            for (let j = min; j <= i; j++) {
-                subPositivePairs.push([i, j]);
-            }
-        }
-    }
+    // Ensure valid inputs
+    if (min > max) throw new Error("Invalid range: min should be <= max");
 
     while (problems.size < count) {
         let num1, num2, op, problem;
 
-        // Randomly select an operation if multiple are allowed
+        // Randomly select an operation
         op = operations[Math.floor(Math.random() * operations.length)];
 
         if (op === "/") {
-            // Ensure whole-number answers for division
+            // Division: Ensure whole-number results
             const divisor = getRandomInt(min, max);
             const quotient = getRandomInt(min, max);
-            num1 = divisor * quotient;
+            num1 = divisor * quotient; // Ensure num1 is divisible by divisor
             problem = `${num1} ${op} ${divisor} =`;
         } else if (operation === "sub_positive") {
-            // Pick a random pair from precomputed positive subtraction pairs
-            const pairIndex = getRandomInt(0, subPositivePairs.length - 1);
-            [num1, num2] = subPositivePairs[pairIndex];
-            problem = `${num1} - ${num2} =`;
+            // Subtraction with positive answers only
+            num1 = getRandomInt(min, max);
+            num2 = getRandomInt(min, max);
 
-            // Remove used pair to prevent duplicates
-            subPositivePairs.splice(pairIndex, 1);
+            // Ensure num1 >= num2 for positive results
+            if (num1 < num2) [num1, num2] = [num2, num1];
+
+            problem = `${num1} - ${num2} =`;
         } else {
-            // Generate problems for other operations
+            // Other operations
             num1 = getRandomInt(min, max);
             num2 = getRandomInt(min, max);
             problem = `${num1} ${op} ${num2} =`;
         }
 
-        // Ensure uniqueness
+        // Add problem to the set if unique
         problems.add(problem);
 
-        // Prevent infinite loop if we've exhausted possible problems
-        if (operation === "sub_positive" && subPositivePairs.length === 0) break;
+        // Prevent infinite loop for too many problems
+        if (problems.size === count) break;
+        if (problems.size >= (max - min + 1) ** 2) {
+            console.warn("Not enough unique problems possible for this range.");
+            break;
+        }
     }
 
-    // Convert Set to Array
     return Array.from(problems);
 }
 
@@ -58,10 +55,10 @@ function getOperations(operation) {
             return ["*", "/"];
         case "all":
             return ["+", "-", "*", "/"];
-        case "sub_positive": // Specific handling for positive subtraction
+        case "sub_positive": // Special case for positive subtraction
             return ["-"];
         default:
-            return [operation]; // Single operation or specific type
+            return [operation]; // Single operation
     }
 }
 
