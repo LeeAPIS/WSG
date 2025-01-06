@@ -121,6 +121,36 @@ function openWorksheetPage(problems, operationName) {
                 }
                 .worksheet {
                     display: grid;
-                    grid-template-columns: repeat(2, 1fr);
+                    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
                     gap: 20px;
-                    padding:
+                    padding: 20px;
+                }
+                .problem {
+                    border: 1px solid #ccc;
+                    border-radius: 5px;
+                    padding: 15px;
+                    text-align: center;
+                    background-color: #f9f9f9;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                }
+            </style>
+        </head>
+        <body>
+            <h1>${operationName} Practice</h1>
+            <div class="worksheet">
+                ${formatProblems(problems)}
+            </div>
+        </body>
+        </html>
+    `);
+    newWindow.document.close();
+}
+
+// Format problems into a grid for the worksheet
+function formatProblems(problems) {
+    let html = "";
+    problems.forEach(problem => {
+        html += `<div class="problem">${problem}</div>`;
+    });
+    return html;
+}
