@@ -99,18 +99,28 @@ function generatePDF(problems, operationName) {
     doc.setFontSize(20);
     doc.text(operationName + " Practice", 105, 20, { align: "center" });
 
-    // Add problems
-    doc.setFontSize(12);
-    let y = 30; // Starting y position
+    // Set up for 4 columns
+    const columns = 4;
+    const margin = 10; // Margin from the edge
+    const pageWidth = doc.internal.pageSize.getWidth() - 2 * margin; // Width of the page minus margins
+    const columnWidth = pageWidth / columns; // Width of each column
     const lineHeight = 10; // Space between lines
+    let y = 30; // Starting y position
 
     problems.forEach((problem, index) => {
-        if (y > 280) { // Check if we need to add a new page
-            doc.addPage();
-            y = 20; // Reset y position for new page
+        // Calculate the x position based on the column
+        const x = margin + (index % columns) * columnWidth; // Calculate x position for the current column
+
+        // Check if we need to move to the next row
+        if (index > 0 && index % columns === 0) {
+            y += lineHeight; // Move down for the next row
+            if (y > 280) { // Check if we need to add a new page
+                doc.addPage();
+                y = 20; // Reset y position for new page
+            }
         }
-        doc.text(problem, 10, y);
-        y += lineHeight; // Move down for the next problem
+
+        doc.text(problem, x, y); // Position the problem in the calculated x and y
     });
 
     // Save the PDF
