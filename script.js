@@ -104,7 +104,7 @@ function openWorksheetPage(problems, operationName) {
                 @media print {
                     @page {
                         size: A4;
-                        margin: 20mm;
+                        margin: 10mm; /* Adjust margins for printing */
                     }
                 }
                 body {
@@ -115,28 +115,31 @@ function openWorksheetPage(problems, operationName) {
                 }
                 h1 {
                     text-align: center;
-                    font-size: 2em;
+                    font-size: 1.5em; /* Adjusted font size for better fit */
                     color: #333;
-                    margin-bottom: 20px;
+                    margin-bottom: 10px;
                 }
                 .worksheet {
                     display: grid;
                     grid-template-columns: repeat(4, 1fr); /* 4 columns */
-                    gap: 20px; /* Space between problems */
-                    padding: 20px;
+ grid-template-rows: repeat(auto-fill, minmax(50px, 1fr)); /* Adjust rows to fit problems */
+                    height: calc(100vh - 60px); /* Fixed height to fit within the page */
+                    gap: 10px; /* Reduced space between problems */
+                    padding: 10px; /* Reduced padding */
                 }
                 .problem {
                     border: 1px solid #ccc;
                     border-radius: 5px;
-                    padding: 15px;
+                    padding: 10px; /* Reduced padding for problems */
                     text-align: center;
                     background-color: #f9f9f9;
-                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+                    font-size: 1.2em; /* Adjusted font size for better fit */
                 }
             </style>
         </head>
         <body>
-            <h1 >${operationName} Practice</h1>
+            <h1>${operationName} Practice</h1>
             <div class="worksheet">
                 ${problems.map(problem => `<div class="problem">${problem}</div>`).join('')}
             </div>
