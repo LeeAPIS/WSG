@@ -11,7 +11,7 @@ document.getElementById("generate").addEventListener("click", () => {
 
     const problems = generateProblems(min, max, operation, count);
     const operationName = getOperationName(operation);
-    openWorksheetPage(problems, operationName);
+    generatePDF(problems, operationName);
 });
 
 // Generate unique math problems
@@ -90,61 +90,21 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// Open a new page with the worksheet
-function openWorksheetPage(problems, operationName) {
-    const newWindow = window.open("", "_blank");
-    newWindow.document.write(`
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>${operationName} Practice</title>
-            <style>
-                @media print {
-                    @page {
-                        size: A4;
-                        margin: 10mm; /* Adjust margins for printing */
-                    }
-                }
-                body {
-                    font-family: 'Arial', sans-serif;
-                    margin: 0;
-                    padding: 0;
-                    background-color: #fff;
-                }
-                h1 {
-                    text-align: center;
-                    font-size: 1.5em; /* Adjusted font size for better fit */
-                    color: #333;
-                    margin-bottom: 10px;
-                }
-                .worksheet {
-                    display: grid;
-                    grid-template-columns: repeat(4, 1fr); /* 4 columns */
-                    grid-auto-rows: 1fr; /* Automatically adjust row height */
-                    height: calc(100vh - 60px); /* Fixed height to fit within the page */
-                    gap: 5px; /* Reduced space between problems */
-                    padding: 5px; /* Reduced padding */
-                }
-                .problem {
-                    border: 1px solid #ccc;
-                    border-radius: 5px;
-                    padding: 5px; /* Reduced padding for problems */
-                    text-align: center;
-                    background-color: #f9f9f9;
-                    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-                    font-size: 0.9em; /* Smaller font size for better fit */
-                }
-            </style>
-        </head>
-        <body>
-            <h1>${operationName} Practice</h1>
-            <div class="worksheet">
-                ${problems.map(problem => `<div class="problem">${problem}</div>`).join('')}
-            </div>
-        </body>
-        </html>
-    `);
-    newWindow.document.close();
-}
+// Generate PDF with problems
+function generatePDF(problems, operationName) {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    // Title
+    doc.setFontSize(20);
+    doc.text(operationName + " Practice", 105, 20, { align: "center" });
+
+    // Add problems
+    doc.setFontSize(12);
+    let y = 30; // Starting y position
+    const lineHeight = 10; // Space between lines
+
+    problems.forEach((problem, index) => {
+        if (y > 280) { // Check if we need to add a new page
+            doc.addPage();
+           
