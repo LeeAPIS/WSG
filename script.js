@@ -7,7 +7,7 @@ document.getElementById("worksheetForm").addEventListener("submit", function (ev
     const operation = document.getElementById("operation").value;
     const problemsCount = parseInt(document.getElementById("problemCount").value); // Read from input field
 
-    // Validate problem count
+    // Validate problem count (ensure it's a positive number)
     if (problemsCount < 1) {
         alert("Please select a positive number of problems.");
         return;
