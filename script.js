@@ -120,7 +120,8 @@ function openWorksheetPage(problems, operationName) {
                     margin-bottom: 10px;
                 }
                 .worksheet {
-                    display: grid grid-template-columns: repeat(4, 1fr); /* 4 columns */
+                    display: grid;
+                    grid-template-columns: repeat(4, 1fr); /* 4 columns */
                     grid-auto-rows: 1fr; /* Automatically adjust row height */
                     height: calc(100vh - 60px); /* Fixed height to fit within the page */
                     gap: 5px; /* Reduced space between problems */
@@ -133,7 +134,7 @@ function openWorksheetPage(problems, operationName) {
                     text-align: center;
                     background-color: #f9f9f9;
                     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-                    font-size: 1em; /* Adjusted font size for better fit */
+                    font-size: 0.9em; /* Smaller font size for better fit */
                 }
             </style>
         </head>
