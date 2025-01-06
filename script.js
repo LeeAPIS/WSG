@@ -121,8 +121,8 @@ function openWorksheetPage(problems, operationName) {
                 }
                 .worksheet {
                     display: grid;
-                    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-                    gap: 20px;
+                    grid-template-columns: repeat(4, 1fr); /* 4 columns */
+                    gap: 20px; /* Space between problems */
                     padding: 20px;
                 }
                 .problem {
@@ -136,4 +136,12 @@ function openWorksheetPage(problems, operationName) {
             </style>
         </head>
         <body>
-            <h1>${operationName} Practice</h
+            <h1 >${operationName} Practice</h1>
+            <div class="worksheet">
+                ${problems.map(problem => `<div class="problem">${problem}</div>`).join('')}
+            </div>
+        </body>
+        </html>
+    `);
+    newWindow.document.close();
+}
