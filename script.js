@@ -6,7 +6,7 @@ document.getElementById("worksheetForm").addEventListener("submit", function (ev
     const maxValue = parseInt(document.getElementById("maxValue").value);
     const operation = document.getElementById("operation").value;
 
-    const problemsCount = 100; // Hardcode the problem count to 100
+    const problemsCount = 100; // Fixed at 100 problems
 
     // Generate unique math problems
     const problems = generateUniqueProblems(minValue, maxValue, operation, problemsCount);
@@ -19,17 +19,22 @@ function generateUniqueProblems(min, max, operation, count) {
     const problems = new Set(); // Using Set to ensure uniqueness
     const operations = getOperations(operation);
 
+    // Ensure that we generate at least 'count' problems
     while (problems.size < count) {
         let num1, num2, op, problem;
 
         // Randomly select an operation
         op = operations[Math.floor(Math.random() * operations.length)];
 
+        // Handle different operations
         if (op === "/") {
-            // For division, ensure we avoid division by zero and create valid problems
             num2 = getRandomInt(min, max);
             if (num2 === 0) num2 = 1; // Prevent division by zero
             num1 = num2 * getRandomInt(min, max); // Make sure num1 is divisible by num2
+            problem = `${num1} ${op} ${num2} =`;
+        } else if (op === "-") {
+            num1 = getRandomInt(min, max);
+            num2 = getRandomInt(min, num1); // Ensure no negative results for subtraction
             problem = `${num1} ${op} ${num2} =`;
         } else {
             num1 = getRandomInt(min, max);
