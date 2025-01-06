@@ -1,99 +1,62 @@
-// Generate unique problems based on user input
-function generateProblems(min, max, operation, count) {
-    const problems = new Set();
-    const operations = getOperations(operation);
-
-    while (problems.size < count) {
-        const op = operations[Math.floor(Math.random() * operations.length)];
-        let num1, num2, problem;
-
-        if (op === "/") {
-            // Division: Ensure whole-number results
-            const divisor = getRandomInt(min, max);
-            const quotient = getRandomInt(min, max);
-            num1 = divisor * quotient;
-            problem = `${num1} ${op} ${divisor} =`;
-        } else if (operation === "sub_positive") {
-            // Subtraction with positive answers only
-            num1 = getRandomInt(min, max);
-            num2 = getRandomInt(min, max);
-            if (num1 < num2) [num1, num2] = [num2, num1];
-            problem = `${num1} - ${num2} =`;
-        } else {
-            num1 = getRandomInt(min, max);
-            num2 = getRandomInt(min, max);
-            problem = `${num1} ${op} ${num2} =`;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Worksheet Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
         }
-
-        problems.add(problem);
-
-        // Break if it's impossible to generate more unique problems
-        if (problems.size >= (max - min + 1) ** 2) {
-            console.warn("Reached the limit of unique problems for the range provided.");
-            break;
+        #worksheet {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
         }
-    }
-
-    return Array.from(problems);
-}
-
-// Get operations based on user selection
-function getOperations(operation) {
-    switch (operation) {
-        case "add_sub":
-            return ["+", "-"];
-        case "mul_div":
-            return ["*", "/"];
-        case "all":
-            return ["+", "-", "*", "/"];
-        case "sub_positive":
-            return ["-"];
-        default:
-            return [operation];
-    }
-}
-
-// Get a random integer between min and max
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-// Display the worksheet in a 4-column format
-function displayWorksheet(problems) {
-    const worksheetDiv = document.getElementById("worksheet");
-    worksheetDiv.innerHTML = "";
-
-    const columns = 4;
-    const problemsPerColumn = Math.ceil(problems.length / columns);
-
-    for (let i = 0; i < columns; i++) {
-        const columnDiv = document.createElement("div");
-        columnDiv.className = "column";
-
-        const columnProblems = problems.slice(i * problemsPerColumn, (i + 1) * problemsPerColumn);
-        columnProblems.forEach(problem => {
-            const problemDiv = document.createElement("div");
-            problemDiv.className = "problem";
-            problemDiv.textContent = problem;
-            columnDiv.appendChild(problemDiv);
-        });
-
-        worksheetDiv.appendChild(columnDiv);
-    }
-}
-
-// Add event listener for the Generate button
-document.getElementById("generate").addEventListener("click", () => {
-    const min = parseInt(document.getElementById("min").value, 10);
-    const max = parseInt(document.getElementById("max").value, 10);
-    const operation = document.getElementById("operation").value;
-    const count = parseInt(document.getElementById("count").value, 10);
-
-    if (isNaN(min) || isNaN(max) || isNaN(count) || min > max || count <= 0) {
-        alert("Please enter valid inputs.");
-        return;
-    }
-
-    const problems = generateProblems(min, max, operation, count);
-    displayWorksheet(problems);
-});
+        .column {
+            display: flex;
+            flex-direction: column;
+            margin: 0 10px;
+        }
+        .problem {
+            margin: 5px 0;
+        }
+        .controls {
+            margin-bottom: 20px;
+        }
+        .controls label, .controls input, .controls select, .controls button {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Math Worksheet Generator</h1>
+    <div class="controls">
+        <label for="min">Min:</label>
+        <input type="number" id="min" value="1">
+        
+        <label for="max">Max:</label>
+        <input type="number" id="max" value="12">
+        
+        <label for="operation">Operation:</label>
+        <select id="operation">
+            <option value="+">Addition</option>
+            <option value="-">Subtraction</option>
+            <option value="sub_positive">Subtraction (Positive Answers)</option>
+            <option value="*">Multiplication</option>
+            <option value="/">Division</option>
+            <option value="add_sub">Addition + Subtraction</option>
+            <option value="mul_div">Multiplication + Division</option>
+            <option value="all">All</option>
+        </select>
+        
+        <label for="count">Count:</label>
+        <input type="number" id="count" value="120">
+        
+        <button id="generate">Generate Worksheet</button>
+    </div>
+    <div id="worksheet"></div>
+    <script src="script.js"></script>
+</body>
+</html>
