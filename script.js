@@ -21,9 +21,9 @@ function generateUniqueProblems(min, max, operation, count) {
         let num1, num2, op, problem;
 
         // Randomly select an operation if multiple are allowed
-        op = operations[Math.floor(Math.random() * operations.length)];
+        op = operations[Math.floor(Math.random() x operations.length)];
 
-        if (op === "/") {
+        if (op === "÷") {
             // Ensure whole-number answers for division
             const divisor = getRandomInt(min, max);
             const quotient = getRandomInt(min, max);
