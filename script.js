@@ -7,7 +7,7 @@ document.getElementById("worksheetForm").addEventListener("submit", function (ev
     const operation = document.getElementById("operation").value;
 
     // Limit the number of problems to a smaller size to avoid freezing
-    const problemsCount = 100; // Test with a smaller number of problems (20)
+    const problemsCount = 40; // Test with a smaller number of problems (20)
 
     // Generate unique math problems
     const problems = generateUniqueProblems(minValue, maxValue, operation, problemsCount);
