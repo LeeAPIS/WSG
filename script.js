@@ -1,3 +1,4 @@
+// Generate unique problems based on user input
 function generateUniqueProblems(min, max, operation, count) {
     const problems = new Set(); // Store unique problems
     const operations = getOperations(operation); // Allowed operations
@@ -47,6 +48,7 @@ function generateUniqueProblems(min, max, operation, count) {
     return Array.from(problems);
 }
 
+// Get operations based on user selection
 function getOperations(operation) {
     switch (operation) {
         case "add_sub":
@@ -62,10 +64,12 @@ function getOperations(operation) {
     }
 }
 
+// Get a random integer between min and max
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+// Display the worksheet
 function displayWorksheet(problems) {
     const worksheetDiv = document.getElementById("worksheet");
     worksheetDiv.innerHTML = ""; // Clear previous content
@@ -89,3 +93,18 @@ function displayWorksheet(problems) {
         worksheetDiv.appendChild(columnDiv);
     }
 }
+
+// Add event listener to the Generate button
+document.getElementById("generate").addEventListener("click", () => {
+    const min = parseInt(document.getElementById("min").value, 10);
+    const max = parseInt(document.getElementById("max").value, 10);
+    const operation = document.getElementById("operation").value;
+    const count = parseInt(document.getElementById("count").value, 10);
+
+    try {
+        const problems = generateUniqueProblems(min, max, operation, count);
+        displayWorksheet(problems);
+    } catch (error) {
+        alert(error.message);
+    }
+});
