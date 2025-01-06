@@ -120,21 +120,20 @@ function openWorksheetPage(problems, operationName) {
                     margin-bottom: 10px;
                 }
                 .worksheet {
-                    display: grid;
-                    grid-template-columns: repeat(4, 1fr); /* 4 columns */
- grid-template-rows: repeat(auto-fill, minmax(50px, 1fr)); /* Adjust rows to fit problems */
+                    display: grid grid-template-columns: repeat(4, 1fr); /* 4 columns */
+                    grid-auto-rows: 1fr; /* Automatically adjust row height */
                     height: calc(100vh - 60px); /* Fixed height to fit within the page */
-                    gap: 10px; /* Reduced space between problems */
-                    padding: 10px; /* Reduced padding */
+                    gap: 5px; /* Reduced space between problems */
+                    padding: 5px; /* Reduced padding */
                 }
                 .problem {
                     border: 1px solid #ccc;
                     border-radius: 5px;
-                    padding: 10px; /* Reduced padding for problems */
+                    padding: 5px; /* Reduced padding for problems */
                     text-align: center;
                     background-color: #f9f9f9;
                     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-                    font-size: 1.2em; /* Adjusted font size for better fit */
+                    font-size: 1em; /* Adjusted font size for better fit */
                 }
             </style>
         </head>
