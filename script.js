@@ -112,7 +112,6 @@ function openWorksheetPage(problems, operationName) {
                     display: flex;
                     justify-content: space-between;
                     flex-wrap: wrap;
-                    border: 1px solid #000;
                     padding: 10px;
                     margin-top: 20px;
                 }
