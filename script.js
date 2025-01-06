@@ -6,8 +6,11 @@ document.getElementById("worksheetForm").addEventListener("submit", function (ev
     const maxValue = parseInt(document.getElementById("maxValue").value);
     const operation = document.getElementById("operation").value;
 
+    // Limit the number of problems generated (for now 20)
+    const problemsCount = 20; // Test with a smaller number of problems
+
     // Generate unique math problems
-    const problems = generateUniqueProblems(minValue, maxValue, operation, 120);
+    const problems = generateUniqueProblems(minValue, maxValue, operation, problemsCount);
 
     // Display problems in columns
     displayWorksheet(problems);
@@ -83,4 +86,3 @@ function displayWorksheet(problems) {
         worksheetDiv.appendChild(columnDiv);
     }
 }
- 
